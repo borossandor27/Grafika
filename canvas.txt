@@ -1,0 +1,4 @@
+létrehozás:
+<canvas id="rajzlap" height="200" width="400"></canvas>
+
+vonal 
