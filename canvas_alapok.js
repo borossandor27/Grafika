@@ -16,8 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
     rajzfelulet.stroke();
 
     //-- kör
+    rajzfelulet.lineWidth(8);
+
     rajzfelulet.beginPath();
     rajzfelulet.strokeStyle = "yellow";
+    //rajzfelulet.fillStyle = "blue";
+    rajzfelulet.fill();
     rajzfelulet.arc(30, 30, 20, 0, 2 * Math.PI);
     rajzfelulet.stroke();
 
