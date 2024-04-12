@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart canvas-on</title>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Canvas kiválasztása
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+
+            // Adatok
+            var data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+            var labels = ["Elem1", "Elem2", "Elem3", "Elem4", "Elem5", "Elem6", "Elem7", "Elem8", "Elem9", "Elem10", "Elem11", "Elem12", "Elem13", "Elem14", "Elem15"];
+
+            // Oszlopdiagram rajzolása
+            var barWidth = 20; // Oszlopok szélessége
+            var spacing = 30; // Oszlopok közötti térköz
+            var startX = 50; // Rajzolás kezdőpontja x-koordináta
+            var startY = 350; // Rajzolás kezdőpontja y-koordináta
+            var maxValue = Math.max.apply(null, data); // Legnagyobb érték meghatározása
+
+            ctx.fillStyle = 'blue'; // Oszlopok színe
+            for (var i = 0; i < data.length; i++) {
+                var height = (data[i] / maxValue) * 300; // Oszlop magassága
+                ctx.fillRect(startX + i * (barWidth + spacing), startY - height, barWidth, height); // Oszlop rajzolása
+            }
+
+            // Címkék hozzáadása
+            ctx.fillStyle = 'black'; // Címkék színe
+            ctx.font = '16px Arial';
+            for (var i = 0; i < labels.length; i++) {
+                ctx.fillText(labels[i], startX + i * (barWidth + spacing), startY + 20); // Címke rajzolása
+            }
+        });
+    </script>
+</body>
+
+</html>
