@@ -1,31 +1,67 @@
-let baseUrl = "https://retoolapi.dev/w3zDNu/diagram"; // URL of the API
-let data = []; // Data array
+/**
+ * @type {HTMLCanvasElement}
+ */
+
+const baseUrl = "https://retoolapi.dev/w3zDNu/diagram"; // URL of the API
+var datas = []; // Data array
 document.addEventListener("DOMContentLoaded", function () {
   // Canvas kiválasztása
-  var canvas = document.getElementById("diagram");
-  var ctx = canvas.getContext("2d");
+  const canvas = document.getElementById("diagram");
+  const ctx = canvas.getContext("2d");
+
+  function setDiagramStyle() {
+    const ctxWidth = canvas.getWidth();
+    const ctxHeight = canvas.getHeight();
+    const ctxMargin = parseInt(ctxWidth / 0.1);
+    const ctxBottomMargin = ctxMargin + 30; // alsó margónál a feliratnak helyet kell hagyni
+    const xAxisWidth = ctxWidth - ctxMargin * 2;
+    const yAxisHeight = ctxHeight - ctxBottomMargin - ctxMargin;
+    const origo = { x: ctxMargin, y: ctxHeight - ctxBottomMargin };
+    const xAxisEnd = { x: origo.x + xAxisWidth, y: origo.y };
+    const yAxisEnd = { x: origo.x, y: origo.y - yAxisHeight };
+    const barWidth = Math.floor((xAxisWidth-datas.length)/datas.length); // adatoszlopok szélessége
+    const spacing = 10; // oszlopok közötti távolság
+    console.log(ctxWidth, ctxHeight);
+  }
+
+  //-- a diagram nem tölti ki a teljes területet
+
+  canvas.width;
+ 
   // Adatok lekérése az API-ból
   function getData() {
-    fetch(baseUrl)
-      .then((response) => response.json())
-      .then((json) => {
-        data = json.data;
+    return fetch(baseUrl)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(function (json) {
+        for (var i = 0; i < json.length; i++) {
+          datas.push({
+            id: json[i].id,
+            ertek: json[i].ertek,
+          });
+        }
+        console.log(datas);
+
         drawChart();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
       });
   }
   getData();
 
   function drawChart() {
     // Oszlopdiagram rajzolása
-    let barWidth = 20; // adatoszlopok szélessége
-    let spacing = 30; // Oszlopok közötti térköz
-    let startX = 50; // Rajzolás kezdőpontja x-koordináta
-    let startY = 350; // Rajzolás kezdőpontja y-koordináta
-    let maxValue = Math.max.apply(null, data); // Legnagyobb érték meghatározása
+    const maxValue = Math.max.apply(null, datas); // Legnagyobb érték meghatározása
+    setDiagramStyle();
 
     ctx.fillStyle = "blue"; // Oszlopok színe
-    for (let i = 0; i < data.length; i++) {
-      var height = (data[i] / maxValue) * 300; // Oszlop magassága
+    for (var i = 0; i < datas.length; i++) {
+      var height = (datas[i]["ertek"] / maxValue) * 300; // Oszlop magassága
       ctx.fillRect(
         startX + i * (barWidth + spacing),
         startY - height,
@@ -37,8 +73,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Címkék hozzáadása
     ctx.fillStyle = "black"; // Címkék színe
     ctx.font = "16px Arial";
-    for (var i = 0; i < labels.length; i++) {
-      ctx.fillText(labels[i], startX + i * (barWidth + spacing), startY + 20); // Címke rajzolása
+    for (var i = 0; i < datas.length; i++) {
+      ctx.fillText(
+        datas[i]["id"],
+        startX + i * (barWidth + spacing),
+        startY + 20
+      ); // Címke rajzolása
     }
   }
 });
