@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Julia halmaz</title>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Julia halmaz</title>
+        <style>
         canvas {
             border: 1px solid black;
         }
     </style>
-</head>
-<body>
-    <div>
-        <label for="maxIterations">Max iterációk száma:</label>
-        <input type="number" id="maxIterations" min="1" value="1000">
-    </div>
-    <div>
-        <label for="colorCount">Színek száma:</label>
-        <input type="number" id="colorCount" min="1" value="360">
-    </div>
-    <div>
-        <label for="realPart">Valós rész:</label>
-        <input type="number" id="realPart" step="0.01" value="-0.7">
-    </div>
-    <div>
-        <label for="imaginaryPart">Imaginárius rész:</label>
-        <input type="number" id="imaginaryPart" step="0.01" value="0.27015">
-    </div>
-    <button id="drawButton">Kirajzolás</button>
-    <canvas id="juliaCanvas" width="800" height="800"></canvas>
+    </head>
+    <body>
+        <div>
+            <label for="maxIterations">Max iterációk száma:</label>
+            <input type="number" id="maxIterations" min="1" value="1000">
+        </div>
+        <div>
+            <label for="colorCount">Színek száma:</label>
+            <input type="number" id="colorCount" min="1" value="360">
+        </div>
+        <div>
+            <label for="realPart">Valós rész:</label>
+            <input type="number" id="realPart" step="0.01" value="-0.7">
+        </div>
+        <div>
+            <label for="imaginaryPart">Imaginárius rész:</label>
+            <input type="number" id="imaginaryPart" step="0.01" value="0.27015">
+        </div>
+        <button id="drawButton">Kirajzolás</button>
+        <canvas id="juliaCanvas" width="800" height="800"></canvas>
 
-    <script>
+        <script>
         function drawJulia(maxIterations, colorCount, cReal, cImaginary) {
             var canvas = document.getElementById('juliaCanvas');
             var ctx = canvas.getContext('2d');
@@ -75,5 +75,5 @@
             drawJulia(1000, 360, -0.7, 0.27015);
         };
     </script>
-</body>
+    </body>
 </html>

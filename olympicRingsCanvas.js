@@ -1,3 +1,6 @@
+/*
+* készítette: Sáray Anna
+*/
 document.addEventListener("DOMContentLoaded", function () {
     const canvas = document.getElementById("olympicRingsCanvas");
     const ctx = canvas.getContext("2d");
